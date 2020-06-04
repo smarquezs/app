@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  webapp:
+    environment:
+      - RAILS_ENV=development
+      - PASSENGER_APP_ENV=development
+    build: .
+    working_dir: /home/app/webapp
+    ports:
+      - '80'
+    volumes:
+      - .:/home/app/webapp

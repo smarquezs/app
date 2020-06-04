@@ -1,24 +1,26 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### Run Application
 
-Things you may want to cover:
+This application uses docker, so you need to run the following commands.
 
-* Ruby version
+To build the image (only once)
+```bash
+$ docker-compose build
+```
 
-* System dependencies
+Every time you need to run the application:
 
-* Configuration
+```bash
+$ docker-compose up -d
+```
 
-* Database creation
+To check in which port the application is running:
 
-* Database initialization
+```bash
+$ docker ps
+```
 
-* How to run the test suite
+Copy the port if the port is `32769`, go to the browser and open [http://localhost:32769](http://localhost:32769)
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+That it's
