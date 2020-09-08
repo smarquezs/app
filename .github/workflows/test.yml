@@ -39,4 +39,6 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Print sha_8
-      run: echo $GITHUB_SHA
+      env:
+        SHA7: ${GITHUB_SHA:7}
+      run: echo $SHA7
