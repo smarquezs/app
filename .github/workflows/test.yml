@@ -38,7 +38,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Get short SHA
+      id: vars
+      run: |
+         echo ::set-output name=sha_short::$(git rev-parse --short=8 ${{ github.sha }})
     - name: Print sha_8
       env:
-        SHA8: ${GITHUB_SHA::8}
+        SHA8: ${{ steps.vars.outputs.sha_short }}
       run: echo $SHA8
