@@ -28,7 +28,7 @@ on:
     branches:
       - master
 
-name: Deploy to Amazon ECS
+name: Test short sha 
 
 jobs:
   deploy:
@@ -41,4 +41,4 @@ jobs:
     - name: Print sha_8
       env:
         SHA8: ${GITHUB_SHA::8}
-      run: echo ${SHA*}
+      run: echo ${SHA8}
