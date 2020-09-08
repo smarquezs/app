@@ -45,4 +45,4 @@ jobs:
     - name: Print sha_8
       env:
         SHA8: ${{ steps.vars.outputs.sha_short }}
-      run: echo $SHA8
+      run: echo $CI_COMMIT_SHORT_SHA
