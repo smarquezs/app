@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :hello
 
-  def hello
-    "Hello World"
-  end
+  def hello; end
+
+  def new_method; end
 end
