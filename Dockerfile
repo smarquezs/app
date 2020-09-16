@@ -1,5 +1,5 @@
 FROM phusion/passenger-ruby24:0.9.23
-MAINTAINER everfactor "dev@everfactor.cl"
+LABEL mantainer="Sergio Márquez <smarquezs@gmail.com>"
 
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
@@ -24,6 +24,8 @@ RUN mkdir /home/app/webapp
 ADD . /home/app/webapp
 RUN usermod -u 1000 app
 RUN chown -R app:app /home/app/webapp
+
+RUN echo "Hello world!!"
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
