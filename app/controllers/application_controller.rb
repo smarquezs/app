@@ -6,4 +6,6 @@ class ApplicationController < ActionController::Base
   def hello; end
 
   def new_method; end
+
+  def dummy; end
 end
