@@ -23,3 +23,11 @@ jobs:
         continue-on-error: true
       - name: Build the docker image
         run: docker build . --tag test-cache
+  build_with_gpr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo ${{ secrets.REGISTRY_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
+      - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache || true
+      - run: docker build . -t test-no-cache --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache
+      - run: docker tag test-no-cache docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache || true
