@@ -25,7 +25,5 @@ ADD . /home/app/webapp
 RUN usermod -u 1000 app
 RUN chown -R app:app /home/app/webapp
 
-RUN echo "Hello world!!"
-
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
