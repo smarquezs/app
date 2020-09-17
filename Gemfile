@@ -60,3 +60,5 @@ gem 'haml-rails'
 # communication between different Ruby on Rails apps
 gem 'aws-liam'
 
+# Iterates over an array with a persisted Round-Robin algorithm
+gem 'roundrobin'
