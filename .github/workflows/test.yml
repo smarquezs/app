@@ -42,7 +42,6 @@ jobs:
       - run: echo ${{ secrets.REGISTRY_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
       - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/app-web || true
       - run: docker-compose -f docker-compose.test.yaml build && docker-compose up -d
-      - run: docker-compose exec -T ls -lah
       - run: docker-compose exec -T bundle exec rails db:create db:structure:load
         env:
           RAILS_ENV: test
