@@ -3,8 +3,8 @@ version: '3'
 services:
   webapp:
     environment:
-      - RAILS_ENV=development
-      - PASSENGER_APP_ENV=development
+      - RAILS_ENV=test
+      - PASSENGER_APP_ENV=test
     build:
       context: .
       cache_from:
