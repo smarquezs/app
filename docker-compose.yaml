@@ -5,7 +5,9 @@ services:
     environment:
       - RAILS_ENV=development
       - PASSENGER_APP_ENV=development
-    build: .
+    build:
+      context: .
+      cache_from: docker.pkg.github.com/app/app-web
     image: app-web
     working_dir: /home/app/webapp
     ports:

@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: echo $GITHUB_REPOSITORY
       - run: echo ${{ secrets.REGISTRY_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
       - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/app-web || true
       - run: docker-compose build
