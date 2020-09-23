@@ -6,6 +6,7 @@ services:
       - RAILS_ENV=development
       - PASSENGER_APP_ENV=development
     build: .
+    image: app-web
     working_dir: /home/app/webapp
     ports:
       - '80'

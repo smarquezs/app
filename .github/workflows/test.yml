@@ -12,7 +12,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build image
-      run: docker build . -t test
+      run: docker-compose build
+      run: docker-compose up -d
 
   build_image_with_cache:
     name: Build with cache
@@ -22,12 +23,14 @@ jobs:
       - uses: satackey/action-docker-layer-caching@v0.0.8
         continue-on-error: true
       - name: Build the docker image
-        run: docker build . --tag test-cache
+        run: docker-compose build
+        run: docker-compose up -d
   build_with_gpr:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - run: echo ${{ secrets.REGISTRY_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
-      - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache || true
-      - run: docker build . -t test-no-cache --cache-from=docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache
-      - run: docker tag test-no-cache docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/test-no-cache || true
+      - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/app-web || true
+      - run: docker-compose build
+      - run: docker-compose up -d
+      - run: docker tag app-web docker.pkg.github.com/$GITHUB_REPOSITORY/app-web && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/app-web || true
