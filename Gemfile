@@ -59,6 +59,3 @@ gem 'haml-rails'
 # Liam is how we decided to call the implementation we did for our events based
 # communication between different Ruby on Rails apps
 gem 'aws-liam'
-
-# Iterates over an array with a persisted Round-Robin algorithm
-gem 'roundrobin'
