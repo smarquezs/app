@@ -9,6 +9,11 @@ jobs:
     name: Build with no cache
     runs-on: ubuntu-latest
     steps:
+    - run: |
+      export COMPOSE_FILE=docker-compose.test.yml
+      export RAILS_ENV=test
+      echo "::set-env name=COMPOSE_FILE::$COMPOSE_FILE"
+      echo "::set-env name=RAILS_ENV::$RAILS_ENV"
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build image
@@ -19,6 +24,11 @@ jobs:
     name: Build with cache
     runs-on: ubuntu-latest
     steps:
+      - run: |
+        export COMPOSE_FILE=docker-compose.test.yml
+        export RAILS_ENV=test
+        echo "::set-env name=COMPOSE_FILE::$COMPOSE_FILE"
+        echo "::set-env name=RAILS_ENV::$RAILS_ENV"
       - uses: actions/checkout@v2
       - uses: satackey/action-docker-layer-caching@v0.0.8
         continue-on-error: true
@@ -28,9 +38,18 @@ jobs:
   build_with_gpr:
     runs-on: ubuntu-latest
     steps:
+      - run: |
+        export COMPOSE_FILE=docker-compose.test.yml
+        export RAILS_ENV=test
+        echo "::set-env name=COMPOSE_FILE::$COMPOSE_FILE"
+        echo "::set-env name=RAILS_ENV::$RAILS_ENV"
       - uses: actions/checkout@v2
+      - run: echo $RAILS_ENV
+      - run: echo $COMPOSE_FILE
       - run: echo ${{ secrets.REGISTRY_TOKEN }} | docker login docker.pkg.github.com -u $GITHUB_ACTOR --password-stdin
       - run: docker pull docker.pkg.github.com/$GITHUB_REPOSITORY/app-web || true
       - run: docker-compose build
       - run: docker-compose up -d
+      # - run: docker-compose exec -T $GITHUB_WORKSPACE bundle exec rails db:create db:structure:load
+      # - run: docker-compose exec -T $GITHUB_WORKSPACE bundle exec rspec spec
       - run: docker tag app-web docker.pkg.github.com/$GITHUB_REPOSITORY/app-web && docker push docker.pkg.github.com/$GITHUB_REPOSITORY/app-web || true
