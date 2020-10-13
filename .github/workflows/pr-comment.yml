@@ -1,7 +1,5 @@
 on:
   issue_comment:
-    types: [created]
-
 name: Deploy
 jobs:
   deploy:
