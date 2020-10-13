@@ -1,6 +1,6 @@
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize, ready_for_review, reopened]
   issue_comment:
     types: [created]
 
