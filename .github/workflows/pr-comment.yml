@@ -10,6 +10,6 @@ jobs:
         with:
           trigger: 'promote'
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: '${{ secrets.REGISTRY_TOKEN }}'
       - run: 'echo Found it!'
         if: steps.check.outputs.triggered == 'true'
