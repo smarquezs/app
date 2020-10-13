@@ -1,6 +1,5 @@
 on:
   pull_request:
-    types: [opened, synchronize, ready_for_review, reopened]
   issue_comment:
     types: [created]
 
@@ -12,7 +11,7 @@ jobs:
       - uses: khan/pull-request-comment-trigger@master
         id: check
         with:
-          trigger: '/promote'
+          trigger: 'promote'
         env:
           GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
       - run: 'echo Found it!'
