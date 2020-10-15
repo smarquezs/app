@@ -16,12 +16,10 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: get_pull_request
         with:
-          route: GET /repos/:repository/pulls/:pull_number
-          pull_number: ${{ github.event.inputs.pull_number }}
-          repository: ${{ github.repository }}
+          route: GET /repos/${{ github.repository }}/pulls/${{ github.event.inputs.pull_number }}
         env:
           GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       - name: Print ref and base branch
         run: |
-          echo "Ref branch ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }}"
-          echo "Ref branch ${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}"
+          echo "Head Ref branch ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }}"
+          echo "Base branch ${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}"
