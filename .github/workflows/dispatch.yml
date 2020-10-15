@@ -2,18 +2,13 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      name:
-        description: 'Person to greet'
+      pull_request:
+        description: 'Pull request to promote'
         required: true
-        default: 'Mona the Octocat'
-      home:
-        description: 'location'
-        required: false
-
 jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
     - run: |
-        echo "Hello ${{ github.event.inputs.name }}!"
-        echo "- in ${{ github.event.inputs.home }}!"
+        echo "Pull request to promote ${{ github.event.inputs.pull_request }}!"
+        echo "Branch to promote ${{ env.GITHUB_REF }}"
