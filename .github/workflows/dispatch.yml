@@ -1,4 +1,4 @@
-name: Manually triggered workflow
+name: Merge PR base branch.
 on:
   workflow_dispatch:
     inputs:
@@ -10,7 +10,7 @@ on:
         default: staging
         required: true
 jobs:
-  say_hello:
+  merge_base_branch:
     runs-on: ubuntu-latest
     steps:
       - name: Get PR data
