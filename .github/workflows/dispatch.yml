@@ -13,10 +13,6 @@ jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
-      - name: Print env
-        run: echo ${{ toJson(env) }}
-      - name: Print github
-        run: echo ${{ toJson(github) }}
       - uses: octokit/request-action@v2.x
         id: get_pull_request
         with:
