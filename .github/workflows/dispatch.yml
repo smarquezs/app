@@ -11,4 +11,5 @@ jobs:
     steps:
     - run: |
         echo "Pull request to promote ${{ github.event.inputs.pull_request }}!"
-        echo "Branch to promote ${{ env.GITHUB_REF }}"
+        echo "Branch to promote ${{ github.ref }}"
+        echo ${{ env }}
