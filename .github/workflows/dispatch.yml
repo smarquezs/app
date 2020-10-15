@@ -13,7 +13,7 @@ jobs:
   say_hello:
     runs-on: ubuntu-latest
     steps:
-      - Get PR data
+      - name: Get PR data
         uses: octokit/request-action@v2.x
         id: get_pull_request
         with:
