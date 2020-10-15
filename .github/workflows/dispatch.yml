@@ -23,8 +23,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       - name: Print ref and base branch
         env:
-          HEAD_REF: ${{ fromJson(steps.create_check_run.outputs.data).head.ref }}
-          BASE_REF: ${{ fromJson(steps.create_check_run.outputs.data).base.ref }}
+          HEAD_REF: ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }}
+          BASE_REF: ${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}
         run: |
           echo "Ref branch $HEAD_REF"
           echo "Ref branch $BASE_REF"
