@@ -2,12 +2,13 @@ name: Manually triggered workflow
 on:
   workflow_dispatch:
     inputs:
-      pull_request_id:
-        description: 'Pull request id to promote'
+      pull_number:
+        description: Pull Request to Promote
         required: true
       environment:
-        description: 'Environment'
+        description: Environment
         default: staging
+        required: true
 jobs:
   say_hello:
     runs-on: ubuntu-latest
@@ -16,11 +17,13 @@ jobs:
         run: echo ${{ toJson(env) }}
       - name: Print github
         run: echo ${{ toJson(github) }}
-    #   - uses: octokit/request-action@v2.x
-    #   id: get_latest_release
-    #   with:
-    #     route: GET /repos/:repository/releases/latest
-    #     repository: ${{ github.repository }}
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    # - run: "echo latest release: ${{ steps.get_latest_release.outputs.data }}"
+      - uses: octokit/request-action@v2.x
+      id: get_pull_request
+      with:
+        route: GET /repos/:owner/:repo/pulls/:pull_number
+        owner: ${{ github.repository_owner }}
+        pull_number: ${{ github.event.inputs.pull_number }}
+        repo: ${{ github.repository }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+      - run: "Pull request data: ${{ steps.get_pull_request.outputs.data }}"
