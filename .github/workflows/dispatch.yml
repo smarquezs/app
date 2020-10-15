@@ -16,10 +16,9 @@ jobs:
       - uses: octokit/request-action@v2.x
         id: get_pull_request
         with:
-          route: GET /repos/:owner/:repo/pulls/:pull_number
-          owner: ${{ github.repository_owner }}
+          route: GET /repos/:repository/pulls/:pull_number
           pull_number: ${{ github.event.inputs.pull_number }}
-          repo: ${{ github.repository }}
+          repository: ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       - run: "Pull request data: ${{ steps.get_pull_request.outputs.data }}"
