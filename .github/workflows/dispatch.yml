@@ -18,12 +18,12 @@ jobs:
       - name: Print github
         run: echo ${{ toJson(github) }}
       - uses: octokit/request-action@v2.x
-      id: get_pull_request
-      with:
-        route: GET /repos/:owner/:repo/pulls/:pull_number
-        owner: ${{ github.repository_owner }}
-        pull_number: ${{ github.event.inputs.pull_number }}
-        repo: ${{ github.repository }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        id: get_pull_request
+        with:
+          route: GET /repos/:owner/:repo/pulls/:pull_number
+          owner: ${{ github.repository_owner }}
+          pull_number: ${{ github.event.inputs.pull_number }}
+          repo: ${{ github.repository }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       - run: "Pull request data: ${{ steps.get_pull_request.outputs.data }}"
