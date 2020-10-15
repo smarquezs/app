@@ -21,4 +21,7 @@ jobs:
           repository: ${{ github.repository }}
         env:
           GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
-      - run: "Pull request data: ${{ steps.get_pull_request.outputs.data }}"
+      - name: Print ref and base branch
+        run: |
+          echo "Ref branch ${{ steps.get_pull_request.outputs.data.head.ref }}"
+          echo "Ref branch ${{ steps.get_pull_request.outputs.data.base.ref }}"
