@@ -27,6 +27,6 @@ jobs:
       - name: Merge base branch
         run: |
           git fetch origin
-          git merge origin/${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}
+          git merge origin/${{ fromJson(steps.get_pull_request.outputs.data).base.ref }} --allow-unrelated-histories
       - name: Run ls to repository
         run: ls -lah
