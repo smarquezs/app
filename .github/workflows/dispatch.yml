@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }}
+          fetch-depth: 0
       - name: Setup git config
         run: |
           git config --global user.email "ops@archdaily.com"
@@ -31,6 +32,6 @@ jobs:
       - name: Merge base branch
         run: |
           git fetch origin
-          git merge origin/${{ fromJson(steps.get_pull_request.outputs.data).base.ref }} --allow-unrelated-histories
+          git merge origin/${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}
       - name: Run ls to repository
         run: ls -lah
