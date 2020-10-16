@@ -10,7 +10,7 @@ on:
         default: staging
         required: true
       environment_variables:
-        description: Aditional Enviroment Variables
+        description: Additional Environment Variables
         required: false
 env:
   DOCKER_BUILDKIT: "1"
