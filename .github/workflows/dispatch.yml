@@ -27,7 +27,7 @@ jobs:
         run: |
           echo "SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-8)" >> $GITHUB_ENV
           echo "APP_NAME=$(echo ${{ github.repository}} | awk -F / '{print $2}')" >> $GITHUB_ENV
-          echo "RAILS_ENV_LINE=$(echo ${{ github.event.inputs.environment_variables }} | sed -E 's/([a-zA-Z_=]+)/--set-string rails_env.\1/g')"
+          echo "RAILS_ENV_LINE=$(echo ${{ github.event.inputs.environment_variables }} | sed -E 's/([a-zA-Z_=]+)/--set-string rails_env.\1/g')" >> $GITHUB_ENV
       - name: Get PR data
         uses: octokit/request-action@v2.x
         id: get_pull_request
