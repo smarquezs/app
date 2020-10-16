@@ -47,7 +47,7 @@ jobs:
           fetch-depth: 0
       - name: Setup git config
         run: |
-          git config --global user.email "ops@archdaily.com"
+          git config --global user.email "<>"
           git config --global user.name "The OPS Team"
       - name: Merge base branch
         run: |
