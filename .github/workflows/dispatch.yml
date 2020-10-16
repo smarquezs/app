@@ -1,14 +1,16 @@
-name: Merge PR base branch.
+name: CD Staging
 on:
   workflow_dispatch:
     inputs:
       pull_number:
-        description: Pull Request to Promote
+        description: Pull Request ID
         required: true
       environment:
         description: Environment
         default: staging
         required: true
+env:
+  APP_ENV: ${{ github.event.inputs.environment }}
 jobs:
   merge_base_branch:
     runs-on: ubuntu-latest
