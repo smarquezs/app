@@ -38,7 +38,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       - name: Print pull request state
-        run: ${{ fromJson(steps.get_pull_request.outputs.data).state }}
+        run: echo ${{ fromJson(steps.get_pull_request.outputs.data).state }}
       - name: Check Pull Request
         run: exit 1
         if: fromJson(steps.get_pull_request.outputs.data).state != 'open'
