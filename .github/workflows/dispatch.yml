@@ -38,10 +38,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.REGISTRY_TOKEN }}
       - name: Check Pull Request
-        run:
-          echo ${{ fromJson(steps.get_pull_request.outputs.data).state }}
-        # if: ${{ fromJson(steps.get_pull_request.outputs.data).state }} != "open"
-        # run: exit 1
+        run: exit 1
+        if: fromJson(steps.get_pull_request.outputs.data).state != "open"
       - name: Set branch name
         run: |
           echo "BRANCH_NAME=$(echo ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }})" >> $GITHUB_ENV
