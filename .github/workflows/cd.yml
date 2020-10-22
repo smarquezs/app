@@ -33,7 +33,7 @@ jobs:
           echo "APP_NAME=$(echo ${{ github.repository}} | awk -F / '{print $2}')" >> $GITHUB_ENV
           echo "RAILS_ENV_LINE=$(echo ${{ github.event.inputs.environment_variables }} | sed -E 's/([a-zA-Z_=]+)/--set-string rails_env.\1/g')" >> $GITHUB_ENV
       - name: Set release name
-        run: echo "RELEASE_NAME=$(if [ $GITHUB_EVENT_NAME = "push" ]; then echo $APP_NAME; else echo $APP_NAME-pr-$PULL_NUMBER"; fi)" >> $GITHUB_ENV
+        run: echo "RELEASE_NAME=$(if [ $GITHUB_EVENT_NAME = "push" ]; then echo $APP_NAME; else echo $APP_NAME-pr-$PULL_NUMBER; fi)" >> $GITHUB_ENV
       - run: echo $RELEASE_NAME
       - name: Get PR data
         uses: octokit/request-action@v2.x
@@ -69,3 +69,5 @@ jobs:
           echo $RAILS_ENV_LINE
           echo $BRANCH_NAME
           echo $RELEASE_NAME
+      - run: echo "The job has failed"
+        if: failure()
