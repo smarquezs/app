@@ -50,7 +50,7 @@ jobs:
         if: env.GITHUB_EVENT_NAME == 'workflow_dispatch' && fromJson(steps.get_pull_request.outputs.data).state != 'open'
       - name: Set branch name
         run: |
-          echo "BRANCH_NAME=$(if [ $GITHUB_EVENT_NAME = "workflow_dispatch" ]; then echo ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }}; else echo ${GITHUB_REF#refs/heads/}; fi)" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$(if [ $GITHUB_EVENT_NAME = "push" ]; then echo ${GITHUB_REF#refs/heads/}; else echo ${{ fromJson(steps.get_pull_request.outputs.data).head.ref }}; fi)" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v2
         with:
