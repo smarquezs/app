@@ -11,4 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print github object
-        run: echo ${{ fromJson(github) }}
+        run: echo ${{ github }}
