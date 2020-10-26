@@ -38,7 +38,7 @@ jobs:
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_MESSAGE: Deploy to ${{ github.repository }} ${{ env.APP_ENV }} started
-          SLACK_TITLE: Deploy Started
+          SLACK_TITLE: Started deploy
       - name: Set release name
         run: echo "RELEASE_NAME=$(if [ $GITHUB_EVENT_NAME != "push" ]; then echo $APP_NAME-pr-$PULL_NUMBER; else echo $APP_NAME; fi)" >> $GITHUB_ENV
       - name: Set service type
@@ -77,10 +77,10 @@ jobs:
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_MESSAGE: "Success: :heavy_check_mark: ${{ github.repository }} deploy to ${{ env.APP_ENV }} "
-          SLACK_TITLE: Deploy Success
+          SLACK_TITLE: Success Deploy
       - name: Slack Notification Failure
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_MESSAGE: "Failure :x: ${{ github.repository }} deploy to ${{ env.APP_ENV }} "
-          SLACK_TITLE: Deploy Failure
+          SLACK_TITLE: Failed Deploy
