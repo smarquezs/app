@@ -11,4 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print github object
-        run: echo ${{ github }}
+        run: echo $CONTEXT
+        env:
+          CONTEXT: ${{ github }}
