@@ -11,6 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Print github object
-        run: echo $CONTEXT
-        env:
-          CONTEXT: ${{ github }}
+        run: echo ${{ toJson(github) }}
