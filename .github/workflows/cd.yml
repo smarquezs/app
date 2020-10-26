@@ -87,7 +87,7 @@ jobs:
           SLACK_MESSAGE: The deploy to ${{ env.APP_ENV }} has been run successfully.
           SLACK_TITLE: Success notify.
       - name: Slack Notification Failure
-        if: {{ failure() }}
+        if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@master
         env:
           SLACK_MESSAGE: The deploy to ${{ env.APP_ENV }} has failed
