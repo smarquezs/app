@@ -21,8 +21,8 @@ env:
   NODE_VERSION: "8.11.0"
   PULL_NUMBER: ${{ github.event.inputs.pull_number }}
   SLACK_CHANNEL: github-actions
-  SLACK_USERNAME: github-actions
   SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  MSG_MINIMAL: true
 
 jobs:
   CD:
@@ -37,8 +37,8 @@ jobs:
       - name: Slack Notification started
         uses: rtCamp/action-slack-notify@master
         env:
-          SLACK_MESSAGE: A deploy to ${{ env.APP_ENV }} started
-          SLACK_TITLE: Started notify.
+          SLACK_MESSAGE: Deploy to ${{ github.repository }} ${{ env.APP_ENV }} started
+          SLACK_TITLE: Deploy Started
       - name: Set release name
         run: echo "RELEASE_NAME=$(if [ $GITHUB_EVENT_NAME != "push" ]; then echo $APP_NAME-pr-$PULL_NUMBER; else echo $APP_NAME; fi)" >> $GITHUB_ENV
       - name: Set service type
@@ -73,22 +73,14 @@ jobs:
         if: github.event_name != 'push'
         run: |
           git merge origin/${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}
-      - name: Print Environment Variables
-        run: |
-          echo $SHORT_SHA
-          echo $APP_NAME
-          echo $RAILS_ENV_LINE
-          echo $BRANCH_NAME
-          echo $RELEASE_NAME
-          echo $CLUSTER_IP
       - name: Slack Notification Success
         uses: rtCamp/action-slack-notify@master
         env:
-          SLACK_MESSAGE: The deploy to ${{ env.APP_ENV }} has been run successfully.
-          SLACK_TITLE: Success notify.
+          SLACK_MESSAGE: "Success: :heavy_check_mark: ${{ github.repository }} deploy to ${{ env.APP_ENV }} "
+          SLACK_TITLE: Deploy Success
       - name: Slack Notification Failure
         if: ${{ failure() }}
         uses: rtCamp/action-slack-notify@master
         env:
-          SLACK_MESSAGE: The deploy to ${{ env.APP_ENV }} has failed
-          SLACK_TITLE: Fail notify.
+          SLACK_MESSAGE: "Failure :x: ${{ github.repository }} deploy to ${{ env.APP_ENV }} "
+          SLACK_TITLE: Deploy Failure
