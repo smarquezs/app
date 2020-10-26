@@ -18,9 +18,12 @@ on:
 env:
   DOCKER_BUILDKIT: "1"
   KUBECONFIG: ./kubeconfig.yaml
-  REPOSITORY_NAME: archdaily
   NODE_VERSION: "8.11.0"
   PULL_NUMBER: ${{ github.event.inputs.pull_number }}
+  SLACK_CHANNEL: github-actions
+  SLACK_USERNAME: github-actions
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
 jobs:
   CD:
     runs-on: ubuntu-latest
@@ -31,6 +34,11 @@ jobs:
           echo "APP_NAME=$(echo ${{ github.repository}} | awk -F / '{print $2}')" >> $GITHUB_ENV
           echo "RAILS_ENV_LINE=$(echo ${{ github.event.inputs.environment_variables }} | sed -E 's/([a-zA-Z_=]+)/--set-string rails_env.\1/g')" >> $GITHUB_ENV
           echo "APP_ENV=$(if [ $GITHUB_EVENT_NAME != "push" ]; then echo ${{ github.event.inputs.environment }}; else echo "production"; fi)" >> $GITHUB_ENV
+      - name: Slack Notification started
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_MESSAGE: A deploy to ${{ env.APP_ENV }} started
+          SLACK_TITLE: Started notify.
       - name: Set release name
         run: echo "RELEASE_NAME=$(if [ $GITHUB_EVENT_NAME != "push" ]; then echo $APP_NAME-pr-$PULL_NUMBER; else echo $APP_NAME; fi)" >> $GITHUB_ENV
       - name: Set service type
@@ -73,5 +81,14 @@ jobs:
           echo $BRANCH_NAME
           echo $RELEASE_NAME
           echo $CLUSTER_IP
-      - run: echo "The job has failed"
-        if: failure()
+      - name: Slack Notification Success
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_MESSAGE: The deploy to ${{ env.APP_ENV }} has been run successfully.
+          SLACK_TITLE: Success notify.
+      - name: Slack Notification Failure
+        if: {{ failure() }}
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_MESSAGE: The deploy to ${{ env.APP_ENV }} has failed
+          SLACK_TITLE: Fail notify.
