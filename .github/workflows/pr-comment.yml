@@ -1,14 +1,19 @@
-name: Add staging deploy instructions message.
+name: Add staging deployment instructions
 
 on:
   pull_request:
     types:
       - opened
       - reopened
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Print github object
-        run: echo ${{ toJson(github) }}
+      - name: Create staging deployment instructions
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ github.run_number }}
+          body: |
+            This is a multi-line test comment
+            - With GitHub **Markdown**
+          reactions: 'rocket'
