@@ -18,9 +18,12 @@ on:
 env:
   DOCKER_BUILDKIT: "1"
   KUBECONFIG: ./kubeconfig.yaml
-  REPOSITORY_NAME: archdaily
   NODE_VERSION: "8.11.0"
   PULL_NUMBER: ${{ github.event.inputs.pull_number }}
+  SLACK_CHANNEL: github-actions
+  SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+  MSG_MINIMAL: true
+
 jobs:
   CD:
     runs-on: ubuntu-latest
@@ -31,6 +34,11 @@ jobs:
           echo "APP_NAME=$(echo ${{ github.repository}} | awk -F / '{print $2}')" >> $GITHUB_ENV
           echo "RAILS_ENV_LINE=$(echo ${{ github.event.inputs.environment_variables }} | sed -E 's/([a-zA-Z_=]+)/--set-string rails_env.\1/g')" >> $GITHUB_ENV
           echo "APP_ENV=$(if [ $GITHUB_EVENT_NAME != "push" ]; then echo ${{ github.event.inputs.environment }}; else echo "production"; fi)" >> $GITHUB_ENV
+      - name: Slack Notification started
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_MESSAGE: Deploy to ${{ github.repository }} ${{ env.APP_ENV }} started
+          SLACK_TITLE: Started deploy
       - name: Set release name
         run: echo "RELEASE_NAME=$(if [ $GITHUB_EVENT_NAME != "push" ]; then echo $APP_NAME-pr-$PULL_NUMBER; else echo $APP_NAME; fi)" >> $GITHUB_ENV
       - name: Set service type
@@ -65,13 +73,14 @@ jobs:
         if: github.event_name != 'push'
         run: |
           git merge origin/${{ fromJson(steps.get_pull_request.outputs.data).base.ref }}
-      - name: Print Environment Variables
-        run: |
-          echo $SHORT_SHA
-          echo $APP_NAME
-          echo $RAILS_ENV_LINE
-          echo $BRANCH_NAME
-          echo $RELEASE_NAME
-          echo $CLUSTER_IP
-      - run: echo "The job has failed"
-        if: failure()
+      - name: Slack Notification Success
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_MESSAGE: "Success: :heavy_check_mark: ${{ github.repository }} deploy to ${{ env.APP_ENV }} "
+          SLACK_TITLE: Success Deploy
+      - name: Slack Notification Failure
+        if: ${{ failure() }}
+        uses: rtCamp/action-slack-notify@master
+        env:
+          SLACK_MESSAGE: "Failure :x: ${{ github.repository }} deploy to ${{ env.APP_ENV }} "
+          SLACK_TITLE: Failed Deploy

@@ -1,15 +1,19 @@
+name: Add staging deployment instructions
+
 on:
-  issue_comment:
-name: Deploy
+  pull_request:
+    types:
+      - opened
+      - reopened
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: khan/pull-request-comment-trigger@master
-        id: check
+      - name: Create staging deployment instructions
+        uses: peter-evans/create-or-update-comment@v1
         with:
-          trigger: '/promote'
-        env:
-          GITHUB_TOKEN: '${{ secrets.REGISTRY_TOKEN }}'
-      - run: echo ${{ steps.check.outputs.comment_body }}
-        if: steps.check.outputs.triggered == 'true'
+          issue-number: ${{ github.event.number }}
+          body: |
+            Add here the tavo's comment:
+            `AFD_HOST=xxx KENNETH_HOST=xxx`
+          reactions: 'rocket'
