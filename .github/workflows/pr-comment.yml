@@ -12,8 +12,8 @@ jobs:
       - name: Create staging deployment instructions
         uses: peter-evans/create-or-update-comment@v1
         with:
-          issue-number: ${{ github.run_number }}
+          issue-number: ${{ github.event.number }}
           body: |
-            This is a multi-line test comment
-            - With GitHub **Markdown**
+            Add here the tavo's comment:
+            `AFD_HOST=xxx KENNETH_HOST=xxx`
           reactions: 'rocket'
