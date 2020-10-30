@@ -24,4 +24,4 @@ jobs:
             `AFD_HOST=xxx KENNETH_HOST=xxx`
           reactions: 'rocket'
       - name: Print Application Name
-        run: echo ${{ env.APP_NAME }}
+        run: echo $APP_NAME
