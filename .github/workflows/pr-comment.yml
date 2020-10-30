@@ -9,7 +9,7 @@ on:
       - synchronize
 
 env:
-  APP_NAME; 'My App'
+  APP_NAME: 'My App'
 
 jobs:
   deploy:
