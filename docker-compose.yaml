@@ -1,6 +1,9 @@
 version: '3'
 
 services:
+  redis:
+    image: k8s.gcr.io/redis
+
   webapp:
     environment:
       - RAILS_ENV=development
@@ -13,3 +16,18 @@ services:
       - '80'
     volumes:
       - .:/home/app/webapp
+
+  webapp-sidekiq:
+    environment:
+      - RAILS_ENV=development
+      - PASSENGER_APP_ENV=development
+    build:
+      context: .
+    image: app-web
+    working_dir: /home/app/webapp
+    command: ['bundle', 'exec', 'sidekiq']
+    ports:
+      - '80'
+    volumes:
+      - .:/home/app/webapp
+

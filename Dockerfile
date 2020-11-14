@@ -4,6 +4,9 @@ LABEL mantainer="Sergio Márquez <smarquezs@gmail.com>"
 # Use baseimage-docker's init system.
 CMD ["/sbin/my_init"]
 
+ARG APP_ENV=development
+ENV WORKDIR /home/app/webapp
+
 # Active nginx
 RUN rm -f /etc/service/nginx/down
 
@@ -19,11 +22,16 @@ ADD webapp.conf /etc/nginx/sites-enabled/webapp.conf
 # Copy the nginx template for configuration and preserve environment variables
 RUN rm /etc/nginx/sites-enabled/default
 
-RUN mkdir /home/app/webapp
+RUN mkdir -p ${WORKDIR}
 
-ADD . /home/app/webapp
+ADD . ${WORKDIR}
+
 RUN usermod -u 1000 app
-RUN chown -R app:app /home/app/webapp
+RUN chown -R app:app ${WORKDIR}
 
-# Clean up APT when done.
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR ${WORKDIR}
+
+ENV RAILS_ENV=${APP_ENV}
+ENV PASSENGER_APP_ENV=${APP_ENV}
+
+RUN bundle exec rails assets:precompile RAILS_ENV=${APP_ENV}}
