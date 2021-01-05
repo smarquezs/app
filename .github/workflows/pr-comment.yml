@@ -9,7 +9,11 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: hmarr/debug-action
+      - name: Print environment variables
+        run: env
+
+      - name: Print event json
+        run: echo "$GITHUB_EVENT_PATH"
 
       - name: Create staging deployment instructions
         uses: peter-evans/create-or-update-comment@v1
