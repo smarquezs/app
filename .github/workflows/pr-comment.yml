@@ -9,6 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: hmarr/debug-action
+
       - name: Create staging deployment instructions
         uses: peter-evans/create-or-update-comment@v1
         with:
