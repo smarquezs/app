@@ -19,13 +19,4 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         with:
           issue-number: ${{ github.event.number }}
-          body: |
-            Add here the tavo's comment:
-            `AFD_HOST=xxx KENNETH_HOST=xxx`
-          reactions: 'rocket'
-
-      - name: Add reactions to PR comment.
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          comment-id: ${{ github.event.pull_request.id }}
           reactions: eyes, hooray
