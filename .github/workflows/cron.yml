@@ -6,7 +6,10 @@ on:
       - master
 
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '*/5 * * * *'
+
+env:
+  APP_NAME: ${{ github.event.repository.name }}
 
 jobs:
   test_cron:
@@ -18,3 +21,13 @@ jobs:
 
       - name: List files
         run: ls -lah
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Print APP_NAME
+        run: |
+          echo "$APP_NAME"
