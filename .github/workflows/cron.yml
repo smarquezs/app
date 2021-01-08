@@ -9,7 +9,7 @@ on:
     - cron: '*/5 * * * *'
 
 env:
-  APP_NAME: ${{ github.event.repository.name || "app" }}
+  APP_NAME: ${{ github.event.repository.name || 'app' }}
 
 jobs:
   test_cron:
