@@ -9,6 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install jq
+
+      - name: Print event json
+        run: cat "$GITHUB_EVENT_PATH" | jq -M .
+
       - name: Create staging deployment instructions
         uses: peter-evans/create-or-update-comment@v1
         with:
