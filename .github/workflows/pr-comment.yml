@@ -1,10 +1,16 @@
 name: Add staging deployment instructions
 
+
 on:
   pull_request:
     types:
       - opened
       - reopened
+      - synchronize
+
+env:
+  APP_NAME: 'My App'
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -17,3 +23,5 @@ jobs:
             Add here the tavo's comment:
             `AFD_HOST=xxx KENNETH_HOST=xxx`
           reactions: 'rocket'
+      - name: Print Application Name
+        run: echo $APP_NAME
