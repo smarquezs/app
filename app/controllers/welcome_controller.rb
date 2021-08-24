@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
   def index
-    render json: { response: 'OK' }, status: :ok
+    render json: { response: 'This is a new response' }, status: :ok
   end
 end
