@@ -35,3 +35,4 @@ ENV RAILS_ENV=${APP_ENV}
 ENV PASSENGER_APP_ENV=${APP_ENV}
 
 RUN bundle exec rails assets:precompile RAILS_ENV=${APP_ENV}}
+
