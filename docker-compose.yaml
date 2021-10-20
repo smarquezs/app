@@ -30,4 +30,3 @@ services:
       - '80'
     volumes:
       - .:/home/app/webapp
-
